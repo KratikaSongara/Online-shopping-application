@@ -7,7 +7,9 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -16,10 +18,10 @@ import java.util.List;
 @Entity
 public class Cart {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer cart_id;
     @OneToOne(cascade = CascadeType.ALL)
     private Customer customer;
     @OneToMany
-    private List<Product> productList = new ArrayList<>();
-    private Integer quantity;
+    private Set<CartItems> cartItemsList = new LinkedHashSet<>();
 }
