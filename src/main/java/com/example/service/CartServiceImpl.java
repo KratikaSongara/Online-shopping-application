@@ -21,14 +21,6 @@ public class CartServiceImpl implements CartService{
     }
 
     @Override
-    public Cart addProduct(Integer cart_id, Product product) {
-//        Optional<Cart> opt = cartDao.findById(cart_id);
-////        opt.get().getProductList().add(product);
-//        return opt.get();
-        return null;
-    }
-
-    @Override
     public String delete(Integer cart_id) {
         cartDao.deleteById(cart_id);
         return "cart successfully deleted";

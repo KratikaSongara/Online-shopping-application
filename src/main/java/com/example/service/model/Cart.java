@@ -1,5 +1,6 @@
 package com.example.service.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,8 +21,9 @@ public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer cart_id;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     private Customer customer;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cart")
+    @JsonIgnore
     private Set<CartItems> cartItemsList = new LinkedHashSet<>();
 }

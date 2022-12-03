@@ -1,5 +1,6 @@
 package com.example.service;
 
+import com.example.repository.CartDao;
 import com.example.repository.CartItemDao;
 import com.example.service.model.Cart;
 import com.example.service.model.CartItems;
@@ -14,9 +15,18 @@ public class CartItemServiceImpl implements CartItemService{
     @Autowired
     private CartItemDao cartItemDao;
 
+    @Autowired
+    private CartDao cartDao;
+
     @Override
     public CartItems addCartItem(CartItems cartItems) {
         cartItemDao.save(cartItems);
+        Integer cart_id = cartItems.getCart().getCart_id();
+        Optional<Cart> opt = cartDao.findById(cart_id);
+        if(opt.isPresent()) {
+            opt.get().getCartItemsList().add(cartItems);
+            cartDao.save(opt.get());
+        }
         return cartItems;
     }
 
@@ -32,6 +42,7 @@ public class CartItemServiceImpl implements CartItemService{
     @Override
     public List<CartItems> getAllCartItems() {
         List<CartItems> list = cartItemDao.findAll();
+        System.out.println(list);
         return list;
     }
 

@@ -34,7 +34,8 @@ public class CartController {
 
     @PostMapping("/{cart_id}/")
     public ResponseEntity<Cart> addNewProductInACart(@PathVariable("cart_id") Integer cart_id, @RequestBody Product product) {
-        return new ResponseEntity<>(cartService.addProduct(cart_id, product), HttpStatus.ACCEPTED);
+//        return new ResponseEntity<>(cartService.addProduct(cart_id, product), HttpStatus.ACCEPTED);
+        return null;
     }
 
     @PutMapping("/{cart_id}/")
