@@ -8,6 +8,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -15,15 +16,14 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Order {
+public class Orders {  //since 'Order' is a keyword in mysql, so, we cannot use it as our class name
     @Id
-    private Integer order_id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer o_id;
     private LocalDate date;
     private String status;
     @OneToOne
     private Customer customer;
-    @Embedded
-    private Address address;
     @OneToMany
     private List<Product> product = new ArrayList<>();
 }

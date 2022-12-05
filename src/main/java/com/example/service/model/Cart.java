@@ -21,7 +21,7 @@ public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer cart_id;
-    @OneToOne
+    @OneToOne    //(cascade = CascadeType.ALL)
     private Customer customer;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cart")
     @JsonIgnore

@@ -1,7 +1,9 @@
 package com.example.service;
 
 import com.example.repository.CartDao;
+import com.example.repository.CustomerDao;
 import com.example.service.model.Cart;
+import com.example.service.model.Customer;
 import com.example.service.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,9 @@ import java.util.Optional;
 public class CartServiceImpl implements CartService{
     @Autowired
     private CartDao cartDao;
+
+    @Autowired
+    private CustomerDao customerDao;
 
     @Override
     public List<Cart> getAllCarts() {
@@ -40,6 +45,11 @@ public class CartServiceImpl implements CartService{
 
     @Override
     public Cart addCart(Cart cart) {
+        Optional<Customer> opt = customerDao.findById(cart.getCustomer().getCustomer_id());
+        if(opt.isPresent()) {
+            Customer customer = opt.get();
+            customer.setCart(cart);
+        }
         cartDao.save(cart);
         return cart;
     }
