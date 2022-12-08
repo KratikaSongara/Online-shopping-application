@@ -17,7 +17,7 @@ public class OrderController {
     private OrdersService ordersService;
 
     @PostMapping("/")
-    public ResponseEntity<Orders> placeOrder(@RequestBody Orders orders) {
+    public ResponseEntity<String> placeOrder(@RequestBody Orders orders) {
         return new ResponseEntity<>(ordersService.placeOrder(orders), HttpStatus.ACCEPTED);
     }
 }

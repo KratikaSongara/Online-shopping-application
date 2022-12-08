@@ -23,25 +23,30 @@ public class OrderServiceImpl implements OrdersService{
     private ProductDao productDao;
 
     @Override
-    public Orders placeOrder(Orders orders) {
+    public String placeOrder(Orders orders) {
         orderDao.save(orders);
         Integer customer_id = orders.getCustomer().getCustomer_id();
         Optional<Customer> opt = customerDao.findById(customer_id);
+        Integer amount = 0;
         if(opt.isPresent()) {
-            System.out.println("present");
+//            System.out.println("present");
             Cart cart = opt.get().getCart();
             Set<CartItems> cartItemsList = cart.getCartItemsList();
 //            System.out.println(cartItemsList);
-            Integer amount = 0;
+//            amount = 0;
             for(CartItems c : cartItemsList) {
                 if(c.getProduct().getQuantity() >= c.getQuantity()) {
                     Integer product_id = c.getProduct().getProduct_id();
                     Optional<Product> opt2 = productDao.findById(product_id);
                     opt2.get().setQuantity(opt2.get().getQuantity() - c.getQuantity());
+                    productDao.save(opt2.get());
                     amount = opt2.get().getPrice() * c.getQuantity();
+                    System.out.println("AMOUNT" + amount);
+                } else {
+                    return "the number of items ordered are not available";
                 }
             }
         }
-        return orders;
+        return "order successfully placed! "+ "\n" + " total amount to be paid is" + " " +amount;
     }
 }
